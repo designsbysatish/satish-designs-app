@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+
+Sitemap: https://designsbysatish.github.io/satish-portal-v2/sitemap.xml
