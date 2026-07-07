@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Satish Designs — High CTR YouTube Thumbnails</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <meta name="description" content="Premium YouTube thumbnail design for realtors, mortgage brokers, business coaches and creators. Designed by Satish Jaiswal.">
 
 <!-- Favicon (inline SVG, zero external assets) -->
@@ -707,6 +708,22 @@
 
   @media (max-width:640px){ .sticky-cta{left:14px; bottom:14px;} }
 </style>
+<style>
+/* ===== Client/Admin App Overlay (scoped to #appOverlay, does not affect homepage) ===== */
+#appOverlay{display:none;position:fixed;inset:0;z-index:1000;overflow-y:auto;background:var(--bg,#faf9f6);}
+#appOverlay.show{display:block;}
+
+:root{
+  --ink:#0a0a0a; --paper:#ffffff; --ivory:#faf9f6; --gold:#c9a961; --gold-deep:#8b6f2e; --gold-bright:#e4c988;
+  --gray:#6b6b6b; --gray-light:#a3a3a3; --line:rgba(0,0,0,.1); --ok:#1e8e5a; --warn:#b8860b; --bad:#c0392b;
+  --bg:var(--ivory); --fg:var(--ink); --card:#fff; --card-line:var(--line);
+}[data-theme="dark"]{ --bg:#0d0d0d; --fg:#f3f1ea; --card:#161616; --card-line:rgba(255,255,255,.1); --gray:#9a9a9a; }#appOverlay *{box-sizing:border-box;margin:0;padding:0;}#appOverlay{font-family:'Inter',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;transition:background .3s,color .3s;}#appOverlay .serif{font-family:'Playfair Display',serif;}#appOverlay a{color:inherit;text-decoration:none;}#appOverlay .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer;border:1px solid transparent;transition:.2s;}#appOverlay .btn-gold{background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:#000;}#appOverlay .btn-gold:hover{transform:translateY(-1px);box-shadow:0 10px 22px -8px rgba(201,169,97,.6);}#appOverlay .btn-outline{border:1px solid var(--card-line);background:var(--card);color:var(--fg);}#appOverlay .btn-dark{background:var(--ink);color:#fff;}#appOverlay .btn-sm{padding:6px 12px;font-size:.75rem;}#appOverlay .btn:disabled{opacity:.5;cursor:not-allowed;}#appOverlay .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}#appOverlay .login-card{background:var(--card);border:1px solid var(--card-line);border-radius:20px;padding:44px 36px;max-width:420px;width:100%;text-align:center;box-shadow:0 20px 60px -20px rgba(0,0,0,.2);}#appOverlay .login-card .mark{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--gold-bright),var(--gold-deep));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:1.3rem;color:#000;margin:0 auto 18px;}#appOverlay .login-card h1{font-size:1.5rem;margin-bottom:8px;}#appOverlay .login-card p{color:var(--gray);font-size:.9rem;margin-bottom:26px;}#appOverlay .google-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px;border-radius:12px;background:#fff;border:1px solid #ddd;font-weight:600;font-size:.92rem;cursor:pointer;color:#222;}#appOverlay .google-btn:hover{box-shadow:0 6px 18px -6px rgba(0,0,0,.25);}#appOverlay .msg{font-size:.85rem;padding:10px 14px;border-radius:10px;margin-bottom:16px;display:none;}#appOverlay .msg.show{display:block;}#appOverlay .msg.err{background:#fdecea;color:var(--bad);}#appOverlay .app{display:none;}#appOverlay .app.show{display:flex;min-height:100vh;}#appOverlay .sidebar{width:230px;flex-shrink:0;background:var(--ink);color:#fff;padding:22px 16px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh;overflow-y:auto;}#appOverlay .sidebar .brand{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;margin-bottom:22px;padding:0 8px;}#appOverlay .sidebar .brand .mark{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bright),var(--gold-deep));display:flex;align-items:center;justify-content:center;color:#000;font-weight:700;font-size:.85rem;}#appOverlay .nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;font-size:.85rem;font-weight:500;cursor:pointer;color:rgba(255,255,255,.75);}#appOverlay .nav-item:hover{background:rgba(255,255,255,.06);color:#fff;}#appOverlay .nav-item.active{background:linear-gradient(135deg,var(--gold-bright),var(--gold-deep));color:#000;font-weight:700;}#appOverlay .sidebar-bottom{margin-top:auto;display:flex;flex-direction:column;gap:4px;}#appOverlay .main{flex:1;min-width:0;}#appOverlay .topbar{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--card-line);padding:14px 26px;display:flex;justify-content:space-between;align-items:center;gap:12px;}#appOverlay .topbar h2{font-size:1.1rem;}#appOverlay .top-actions{display:flex;align-items:center;gap:14px;}#appOverlay .icon-btn{width:38px;height:38px;border-radius:50%;background:var(--card);border:1px solid var(--card-line);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.05rem;position:relative;}#appOverlay .icon-btn .dot{position:absolute;top:-2px;right:-2px;background:var(--bad);color:#fff;font-size:.6rem;border-radius:50%;width:15px;height:15px;display:flex;align-items:center;justify-content:center;font-weight:700;}#appOverlay .avatar-mini{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid var(--card-line);}#appOverlay .container{padding:24px 26px 80px;max-width:1200px;}
+@media(max-width:860px){#appOverlay .app.show{flex-direction:column;}#appOverlay .sidebar{position:static;width:100%;height:auto;flex-direction:row;overflow-x:auto;padding:12px;}#appOverlay .sidebar .brand{display:none;}#appOverlay .sidebar-bottom{margin-top:0;flex-direction:row;}#appOverlay .nav-item{white-space:nowrap;}
+}#appOverlay .view{display:none;}#appOverlay .view.active{display:block;}#appOverlay .grid{display:grid;gap:16px;}#appOverlay .stat-cards{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));}#appOverlay .stat-card{background:var(--card);border:1px solid var(--card-line);border-radius:16px;padding:20px;}#appOverlay .stat-card .label{font-size:.78rem;color:var(--gray);text-transform:uppercase;letter-spacing:.03em;}#appOverlay .stat-card .value{font-size:1.7rem;font-weight:700;margin-top:6px;font-family:'JetBrains Mono',monospace;}#appOverlay .card{background:var(--card);border:1px solid var(--card-line);border-radius:16px;padding:22px;margin-bottom:18px;}#appOverlay .card h4{font-size:.95rem;margin-bottom:14px;}#appOverlay .services-grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}#appOverlay .service-card{background:var(--card);border:1px solid var(--card-line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:12px;position:relative;}#appOverlay .service-card .fav{position:absolute;top:16px;right:16px;cursor:pointer;font-size:1.2rem;background:none;border:none;color:var(--gray);}#appOverlay .service-card h3{font-size:1.05rem;}#appOverlay .service-card .price{font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--gold-deep);}#appOverlay .service-card ul{list-style:none;font-size:.82rem;color:var(--gray);display:flex;flex-direction:column;gap:4px;}#appOverlay .service-card ul li::before{content:"✓ ";color:var(--ok);font-weight:700;}#appOverlay table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--card-line);}#appOverlay th,#appOverlay td{padding:12px 14px;text-align:left;font-size:.83rem;border-bottom:1px solid var(--card-line);}#appOverlay th{background:var(--ink);color:#fff;font-size:.72rem;text-transform:uppercase;}#appOverlay tr:last-child td{border-bottom:none;}#appOverlay tr.clickable:hover{background:rgba(201,169,97,.08);cursor:pointer;}#appOverlay .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.7rem;font-weight:700;}#appOverlay .badge-status{background:#f0ece0;color:var(--gold-deep);}#appOverlay .badge-pay-pending{background:#fdf3e0;color:var(--warn);}#appOverlay .badge-pay-paid{background:#e8f5ee;color:var(--ok);}#appOverlay .badge-pay-refunded{background:#fdecea;color:var(--bad);}#appOverlay .progress-bar-wrap{background:#eee;border-radius:999px;height:10px;overflow:hidden;}#appOverlay .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold-bright),var(--gold-deep));border-radius:999px;transition:width .5s;}#appOverlay .countdown{display:flex;gap:10px;margin:10px 0;}#appOverlay .countdown div{background:var(--ink);color:#fff;border-radius:10px;padding:10px 14px;text-align:center;min-width:60px;}#appOverlay .countdown .num{font-size:1.3rem;font-weight:700;font-family:'JetBrains Mono',monospace;}#appOverlay .countdown .unit{font-size:.65rem;color:var(--gray-light);text-transform:uppercase;}#appOverlay .status-flow{display:flex;flex-direction:column;margin-top:6px;}#appOverlay .status-step{display:flex;gap:12px;align-items:flex-start;padding:8px 0;position:relative;}#appOverlay .status-step .dot{width:14px;height:14px;border-radius:50%;background:#ddd;flex-shrink:0;margin-top:3px;position:relative;z-index:1;}#appOverlay .status-step.done .dot{background:var(--gold-deep);}#appOverlay .status-step.current .dot{background:var(--gold-bright);box-shadow:0 0 0 4px rgba(201,169,97,.3);}#appOverlay .status-step::before{content:'';position:absolute;left:6.5px;top:20px;bottom:-8px;width:1px;background:var(--card-line);}#appOverlay .status-step:last-child::before{display:none;}#appOverlay .status-step .label{font-size:.88rem;}#appOverlay .status-step.done .label,#appOverlay .status-step.current .label{font-weight:700;}#appOverlay .chat-box{height:280px;overflow-y:auto;border:1px solid var(--card-line);border-radius:12px;padding:14px;margin-bottom:12px;background:var(--bg);display:flex;flex-direction:column;gap:8px;}#appOverlay .chat-msg{max-width:75%;padding:9px 13px;border-radius:14px;font-size:.87rem;}#appOverlay .chat-msg.me{align-self:flex-end;background:var(--ink);color:#fff;}#appOverlay .chat-msg.them{align-self:flex-start;background:var(--card);border:1px solid var(--card-line);}#appOverlay .chat-row{display:flex;gap:8px;}#appOverlay input[type=text],#appOverlay input[type=email],#appOverlay input[type=number],#appOverlay input[type=datetime-local],#appOverlay textarea,#appOverlay select{width:100%;padding:10px 12px;border:1px solid var(--card-line);border-radius:10px;font-family:inherit;font-size:.9rem;background:var(--card);color:var(--fg);}#appOverlay textarea{resize:vertical;min-height:70px;}#appOverlay .field{margin-bottom:14px;}#appOverlay .field label{display:block;font-size:.78rem;font-weight:600;color:var(--gray);margin-bottom:5px;}#appOverlay .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:300;padding:16px;overflow-y:auto;}#appOverlay .modal-overlay.show{display:flex;}#appOverlay .modal{background:var(--card);border-radius:16px;padding:26px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;color:var(--fg);}#appOverlay .modal h3{margin-bottom:14px;}#appOverlay .close-x{float:right;cursor:pointer;font-size:1.3rem;color:var(--gray);}#appOverlay .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:600px){#appOverlay .grid2{grid-template-columns:1fr;}}#appOverlay .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-size:.85rem;z-index:400;display:none;}#appOverlay .toast.show{display:block;}#appOverlay .empty{text-align:center;padding:50px 20px;color:var(--gray);}#appOverlay .search-row{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}#appOverlay .filter-chip{padding:7px 14px;border-radius:999px;font-size:.78rem;font-weight:600;background:var(--card);border:1px solid var(--card-line);cursor:pointer;}#appOverlay .filter-chip.active{background:var(--ink);color:#fff;}#appOverlay .rev-item{border-left:2px solid var(--gold-deep);padding:6px 0 6px 12px;margin-bottom:8px;font-size:.85rem;}#appOverlay .file-thumb{max-width:100%;border-radius:8px;margin-bottom:8px;}#appOverlay .notif-panel{position:fixed;top:70px;right:20px;width:340px;max-width:92vw;background:var(--card);border:1px solid var(--card-line);border-radius:14px;box-shadow:0 20px 50px -15px rgba(0,0,0,.25);z-index:200;display:none;}#appOverlay .notif-panel.show{display:block;}#appOverlay .notif-panel-hdr{padding:14px 16px;border-bottom:1px solid var(--card-line);font-weight:700;font-size:.9rem;}#appOverlay .notif-list{max-height:400px;overflow-y:auto;}#appOverlay .notif-item{padding:12px 16px;border-bottom:1px solid var(--card-line);font-size:.85rem;}#appOverlay .notif-item.unread{background:rgba(201,169,97,.08);}#appOverlay .notif-item .time{display:block;font-size:.7rem;color:var(--gray);margin-top:3px;}#appOverlay .announcement-bar{background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright));color:#000;text-align:center;padding:9px 16px;font-size:.82rem;font-weight:600;display:none;}#appOverlay .announcement-bar.show{display:block;}#appOverlay .review-stars{color:var(--gold-deep);font-size:1.1rem;letter-spacing:2px;}#appOverlay .dispute-btn{color:var(--bad);}
+
+</style>
+
 </head>
 <body>
 
@@ -774,7 +791,7 @@
         <a href="#faq">FAQ</a>
       </div>
       <div class="nav-cta">
-        <a href="dashboard.html" class="btn btn-ghost btn-sm">Client Login</a>
+        <a href="javascript:void(0)" data-open-dashboard class="btn btn-ghost btn-sm">Client Login</a>
         <a href="#contact" class="btn btn-gold btn-sm">Order Now</a>
         <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
@@ -1048,7 +1065,7 @@
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#c9a961" stroke-width="2"/></svg>YouTube optimized</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#c9a961" stroke-width="2"/></svg>Direct chat support</li>
         </ul>
-        <a href="https://paypal.me/satishDesigns/10" target="_blank" rel="noopener" class="btn btn-ghost">Order Now — Pay $10</a>
+        <a href="javascript:void(0)" data-start-order="single-thumbnail" class="btn btn-ghost">Order Now — Pay $10</a>
       </div>
       <div class="price-card feat reveal">
         <span class="pop">Most Popular</span>
@@ -1065,7 +1082,7 @@
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#e4c988" stroke-width="2"/></svg>Thumbnail strategy session</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#e4c988" stroke-width="2"/></svg>CTR-focused design</li>
         </ul>
-        <a href="https://paypal.me/satishDesigns/45" target="_blank" rel="noopener" class="btn btn-gold">Start Project — Pay $45</a>
+        <a href="javascript:void(0)" data-start-order="thumbnail-package" class="btn btn-gold">Start Project — Pay $45</a>
       </div>
       <div class="price-card reveal">
         <span class="plan-tag">Channel Pack</span>
@@ -1081,7 +1098,7 @@
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#c9a961" stroke-width="2"/></svg>Thumbnail consultation</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#c9a961" stroke-width="2"/></svg>Commercial rights</li>
         </ul>
-        <a href="https://paypal.me/satishDesigns/85" target="_blank" rel="noopener" class="btn btn-ghost">Let's Work Together — Pay $85</a>
+        <a href="javascript:void(0)" data-start-order="channel-pack" class="btn btn-ghost">Let's Work Together — Pay $85</a>
       </div>
       <div class="price-card custom-card reveal">
         <span class="plan-tag">Custom Quote</span>
@@ -1687,7 +1704,7 @@
     const wrap = document.createElement('div');
     wrap.style.cssText = 'position:fixed; right:20px; bottom:24px; z-index:90; display:flex; flex-direction:column; gap:12px; align-items:flex-end;';
     wrap.innerHTML = `
-      <a href="dashboard.html" title="Client Portal" style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold-bright),var(--gold-deep));display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px -8px rgba(201,169,97,.6);font-size:1.3rem;transition:transform .3s ease;">📊</a>
+      <a href="javascript:void(0)" data-open-dashboard title="Client Portal" style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold-bright),var(--gold-deep));display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px -8px rgba(201,169,97,.6);font-size:1.3rem;transition:transform .3s ease;">📊</a>
     `;
     wrap.querySelectorAll('a').forEach(a => {
       a.addEventListener('mouseenter', () => a.style.transform = 'translateY(-3px) scale(1.05)');
@@ -1695,6 +1712,961 @@
     });
     document.body.appendChild(wrap);
   })();
+</script>
+
+<div id="appOverlay">
+
+<div class="announcement-bar" id="announcementBar"></div>
+
+<div class="login-wrap" id="loginView">
+  <div class="login-card">
+    <div class="mark">SD</div>
+    <h1 class="serif">Satish Designs</h1>
+    <p>One click. Your dashboard — client or admin — opens automatically.</p>
+    <div class="msg err" id="loginMsg"></div>
+    <button class="google-btn" id="googleBtn">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.57 2.7-3.88 2.7-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 0 1 3.66 9c0-.59.1-1.17.29-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l2.99-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l2.99 2.33C4.66 5.17 6.65 3.58 9 3.58z"/></svg>
+      Continue with Google
+    </button>
+  </div>
+</div>
+
+<div class="app" id="appView">
+  <div class="sidebar">
+    <div class="brand"><div class="mark">SD</div> Satish Designs</div>
+    <div id="navItems"></div>
+    <div class="sidebar-bottom">
+      <div class="nav-item" id="darkModeToggle">🌙 <span>Dark Mode</span></div>
+      <div class="nav-item" id="logoutBtn">🚪 <span>Log Out</span></div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <h2 id="topbarTitle">Dashboard</h2>
+      <div class="top-actions"><span class="btn btn-outline btn-sm" id="closeAppOverlayBtn">← Back to Website</span>
+        <div class="icon-btn" id="bellBtn">🔔<span class="dot" id="notifDot" style="display:none;">0</span></div>
+        <img class="avatar-mini" id="avatarMini" src="" alt="">
+      </div>
+    </div>
+    <div class="container">
+
+      <div class="view" id="view-services">
+        <h2 class="serif" style="margin-bottom:16px;">Start a New Order</h2>
+        <div class="grid services-grid" id="servicesGrid"></div>
+      </div>
+
+      <div class="view" id="view-orders">
+        <h2 class="serif" style="margin-bottom:16px;">My Orders</h2>
+        <div class="grid" id="clientOrdersList" style="grid-template-columns:1fr;gap:14px;"></div>
+      </div>
+
+      <div class="view" id="view-order-detail">
+        <span class="btn btn-outline btn-sm" id="backToOrders" style="margin-bottom:14px;">← Back</span>
+        <div class="grid2">
+          <div>
+            <div class="card"><h4>⏱ Delivery Countdown</h4><div class="countdown" id="dCountdown"></div></div>
+            <div class="card">
+              <h4>📊 Live Progress</h4>
+              <div class="progress-bar-wrap"><div class="progress-bar-fill" id="dProgressFill" style="width:0%;"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--gray);margin:8px 0;"><span id="dProgressLabel"></span><span id="dProgressPct"></span></div>
+              <div class="status-flow" id="dStatusFlow"></div>
+            </div>
+            <div class="card"><h4>📁 Final Files</h4><div id="dFileBox"></div></div>
+            <div class="card"><h4>🔁 Revisions</h4><div id="dRevisions"></div>
+              <textarea id="revInput" placeholder="Describe the changes you'd like…" style="margin:10px 0;"></textarea>
+              <button class="btn btn-dark" id="submitRevBtn">Request Revision</button>
+            </div>
+            <div class="card" id="payCard" style="display:none;"><h4>💳 Complete Payment</h4><div id="paypal-button-container"></div></div>
+            <div class="card" id="reviewCard" style="display:none;">
+              <h4>⭐ Leave a Review</h4>
+              <div id="reviewExisting" style="display:none;"></div>
+              <div id="reviewForm">
+                <div style="font-size:1.6rem;letter-spacing:6px;cursor:pointer;margin-bottom:10px;" id="starPicker">☆☆☆☆☆</div>
+                <textarea id="reviewText" placeholder="How was your experience?"></textarea>
+                <button class="btn btn-gold" id="submitReviewBtn" style="margin-top:8px;">Submit Review</button>
+              </div>
+            </div>
+            <div class="card">
+              <h4>⚠️ Need Help?</h4>
+              <p style="font-size:.82rem;color:var(--gray);margin-bottom:10px;">Having an issue with this order? Open a dispute and the admin will review it.</p>
+              <button class="btn btn-outline btn-sm dispute-btn" id="openDisputeBtn">Report an Issue / Request Refund</button>
+              <div id="disputeStatus" style="margin-top:10px;"></div>
+            </div>
+          </div>
+          <div>
+            <div class="card"><h4>💬 Chat</h4><div class="chat-box" id="chatBox"></div>
+              <div class="chat-row"><input type="text" id="chatInput" placeholder="Type a message…"><button class="btn btn-dark" id="sendChatBtn">Send</button></div>
+            </div>
+            <div class="card"><h4>ℹ️ Order Info</h4><div id="dInfoBox" style="font-size:.85rem;color:var(--gray);"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="view" id="view-invoices">
+        <table><thead><tr><th>Invoice #</th><th>Order</th><th>Amount</th><th>Date</th></tr></thead><tbody id="invoicesTbody"></tbody></table>
+      </div>
+
+      <div class="view" id="view-favorites">
+        <div class="grid services-grid" id="favoritesGrid"></div>
+      </div>
+
+      <div class="view" id="view-referral">
+        <div class="card">
+          <h4>🎁 Refer & Earn</h4>
+          <p style="font-size:.85rem;color:var(--gray);margin-bottom:12px;">Share your code with friends — when they order, you both get rewarded.</p>
+          <div class="field"><label>Your Referral Code</label><input type="text" id="referralCodeBox" readonly></div>
+          <button class="btn btn-outline btn-sm" id="copyReferralBtn">Copy Code</button>
+        </div>
+        <div class="card"><h4>Your Referrals</h4><div id="referralsList"></div></div>
+      </div>
+
+      <div class="view" id="view-profile">
+        <div class="card" style="max-width:480px;">
+          <h4>👤 My Profile</h4>
+          <div class="field"><label>Full Name</label><input type="text" id="profName"></div>
+          <div class="field"><label>Company</label><input type="text" id="profCompany"></div>
+          <div class="field"><label>Country</label><input type="text" id="profCountry"></div>
+          <button class="btn btn-dark" id="saveProfileBtn">Save Changes</button>
+        </div>
+      </div>
+
+      <div class="view" id="view-admin-dashboard">
+        <div class="grid stat-cards" style="margin-bottom:20px;">
+          <div class="stat-card"><div class="label">Total Revenue</div><div class="value" id="statRevenue">$0</div></div>
+          <div class="stat-card"><div class="label">Total Orders</div><div class="value" id="statOrders">0</div></div>
+          <div class="stat-card"><div class="label">Total Clients</div><div class="value" id="statClients">0</div></div>
+          <div class="stat-card"><div class="label">This Month</div><div class="value" id="statMonth">$0</div></div>
+        </div>
+        <div class="card"><h4>🏆 Best Selling Service</h4><div id="bestService" style="font-size:.9rem;color:var(--gray);"></div></div>
+      </div>
+
+      <div class="view" id="view-admin-orders">
+        <div class="search-row">
+          <input type="text" id="adminSearch" placeholder="Search order, client, project…" style="max-width:280px;">
+          <div class="filter-chip active" data-filter="all">All</div>
+          <div class="filter-chip" data-filter="Payment Pending">Unpaid</div>
+          <div class="filter-chip" data-filter="Paid">Paid</div>
+          <div class="filter-chip" data-filter="Completed">Completed</div>
+          <button class="btn btn-gold btn-sm" id="newOrderBtn" style="margin-left:auto;">+ New Order</button>
+          <button class="btn btn-outline btn-sm" id="exportCsvBtn">⬇ Export CSV</button>
+        </div>
+        <table><thead><tr><th>Order</th><th>Client</th><th>Status</th><th>Progress</th><th>Payment</th><th>Delivery</th></tr></thead><tbody id="adminOrdersTbody"></tbody></table>
+      </div>
+
+      <div class="view" id="view-admin-order-detail">
+        <span class="btn btn-outline btn-sm" id="backToAdminOrders" style="margin-bottom:14px;">← Back</span>
+        <h3 id="aoTitle"></h3>
+        <p style="font-size:.8rem;color:var(--gray);margin-bottom:16px;" id="aoMeta"></p>
+        <div class="grid2">
+          <div>
+            <div class="card"><h4>Status</h4>
+              <select id="aoStatus"><option>Order Received</option><option>Brief Reviewed</option><option>Design Started</option><option>First Draft Ready</option><option>Revision</option><option>Final Delivery</option><option>Completed</option></select>
+              <button class="btn btn-outline btn-sm" id="aoUpdateStatus" style="margin-top:8px;">Update Status</button>
+            </div>
+            <div class="card"><h4>Payment</h4>
+              <select id="aoPayment"><option>Payment Pending</option><option>Paid</option><option>Refunded</option></select>
+              <button class="btn btn-outline btn-sm" id="aoUpdatePayment" style="margin-top:8px;">Update Payment</button>
+              <button class="btn btn-dark btn-sm" id="aoGenerateInvoice" style="margin-top:8px;">Generate Invoice</button>
+            </div>
+            <div class="card"><h4>Upload File</h4><input type="file" id="aoFileInput" accept="image/*,.psd,.zip,.pdf"><button class="btn btn-dark btn-sm" id="aoUploadBtn" style="margin-top:8px;">Upload</button><div id="aoFiles" style="margin-top:10px;"></div></div>
+            <div class="card"><h4>Revisions</h4><div id="aoRevisions"></div></div>
+            <div class="card"><h4>🗒 Admin Notes (private)</h4><div id="aoNotes" style="margin-bottom:8px;"></div><textarea id="aoNoteInput" placeholder="Internal note…"></textarea><button class="btn btn-outline btn-sm" id="aoAddNote" style="margin-top:8px;">Add Note</button></div>
+            <div class="card"><h4>⭐ Review</h4><div id="aoReview"></div></div>
+            <div class="card"><h4>⚠️ Disputes</h4><div id="aoDisputes"></div></div>
+          </div>
+          <div>
+            <div class="card"><h4>Chat</h4><div class="chat-box" id="aoChat"></div><div class="chat-row"><input type="text" id="aoChatInput" placeholder="Reply…"><button class="btn btn-dark" id="aoSendChat">Send</button></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="view" id="view-admin-clients">
+        <table><thead><tr><th>Client</th><th>Email</th><th>Orders</th></tr></thead><tbody id="clientsTbody"></tbody></table>
+      </div>
+
+      <div class="view" id="view-admin-services">
+        <button class="btn btn-gold btn-sm" id="newServiceBtn" style="margin-bottom:16px;">+ Add Service</button>
+        <div class="grid services-grid" id="adminServicesGrid"></div>
+      </div>
+
+      <div class="view" id="view-admin-coupons">
+        <button class="btn btn-gold btn-sm" id="newCouponBtn" style="margin-bottom:16px;">+ Add Coupon</button>
+        <table><thead><tr><th>Code</th><th>Discount</th><th>Used</th><th>Expires</th><th>Active</th></tr></thead><tbody id="couponsTbody"></tbody></table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="notif-panel" id="notifPanel"><div class="notif-panel-hdr">Notifications</div><div class="notif-list" id="notifList"></div></div>
+
+<div class="modal-overlay" id="orderRequestModal">
+  <div class="modal">
+    <span class="close-x" data-close="orderRequestModal">&times;</span>
+    <h3 id="orModalTitle">Order Now</h3>
+    <div class="msg err" id="orMsg"></div>
+    <div class="field"><label>YouTube Channel</label><input type="text" id="orChannel"></div>
+    <div class="field"><label>Video Title (optional)</label><input type="text" id="orVideoTitle"></div>
+    <div class="grid2">
+      <div class="field"><label>Thumbnail Style</label><input type="text" id="orStyle" placeholder="Bold, MrBeast-style, minimal…"></div>
+      <div class="field"><label>Deadline</label><input type="datetime-local" id="orDeadline"></div>
+    </div>
+    <div class="field"><label>Reference Links (optional)</label><input type="text" id="orRefLinks" placeholder="Paste links, comma separated"></div>
+    <div class="field"><label>Reference Image (optional)</label><input type="file" id="orRefImage" accept="image/*"></div>
+    <div class="field"><label>Description / Brief</label><textarea id="orDescription"></textarea></div>
+    <div class="field"><label>Coupon Code (optional)</label><input type="text" id="orCoupon"></div>
+    <div class="field">
+      <label>Add-ons (optional)</label>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:.85rem;">
+        <label style="display:flex;align-items:center;gap:8px;font-weight:400;"><input type="checkbox" id="extraRush" style="width:auto;" data-price="15"> Rush Delivery (24h) — +$15</label>
+        <label style="display:flex;align-items:center;gap:8px;font-weight:400;"><input type="checkbox" id="extraRevision" style="width:auto;" data-price="5"> Extra Revision — +$5</label>
+      </div>
+    </div>
+    <div style="font-size:.9rem;margin-bottom:12px;">Total: <b id="orTotal">$0</b></div>
+    <button class="btn btn-gold" id="orSubmitBtn" style="width:100%;justify-content:center;">Submit Order Request</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="disputeModal">
+  <div class="modal">
+    <span class="close-x" data-close="disputeModal">&times;</span>
+    <h3>Report an Issue</h3>
+    <div class="field"><label>What went wrong?</label><textarea id="disputeReason" placeholder="Describe the issue or reason for refund request…"></textarea></div>
+    <button class="btn btn-dark" id="submitDisputeBtn" style="width:100%;justify-content:center;">Submit</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="newOrderModal">
+  <div class="modal">
+    <span class="close-x" data-close="newOrderModal">&times;</span>
+    <h3>Create Order</h3>
+    <div class="msg err" id="newOrderMsg"></div>
+    <div class="field"><label>Client Email</label><input type="email" id="noClientEmail"></div>
+    <div class="field"><label>Project Name</label><input type="text" id="noProjectName"></div>
+    <div class="grid2">
+      <div class="field"><label>Delivery Date</label><input type="datetime-local" id="noDeliveryDate"></div>
+      <div class="field"><label>Price</label><input type="number" id="noPrice"></div>
+    </div>
+    <div class="field"><label>Brief</label><textarea id="noBrief"></textarea></div>
+    <button class="btn btn-dark" id="createOrderBtn" style="width:100%;justify-content:center;">Create</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="serviceModal">
+  <div class="modal">
+    <span class="close-x" data-close="serviceModal">&times;</span>
+    <h3>Service</h3>
+    <input type="hidden" id="svcId">
+    <div class="field"><label>Name</label><input type="text" id="svcName"></div>
+    <div class="field"><label>Description</label><textarea id="svcDescription"></textarea></div>
+    <div class="grid2">
+      <div class="field"><label>Price ($)</label><input type="number" id="svcPrice"></div>
+      <div class="field"><label>Delivery (days)</label><input type="number" id="svcDelivery"></div>
+    </div>
+    <div class="field"><label>Features (comma separated)</label><input type="text" id="svcFeatures"></div>
+    <button class="btn btn-dark" id="saveServiceBtn" style="width:100%;justify-content:center;">Save Service</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="couponModal">
+  <div class="modal">
+    <span class="close-x" data-close="couponModal">&times;</span>
+    <h3>New Coupon</h3>
+    <div class="field"><label>Code</label><input type="text" id="cpCode" style="text-transform:uppercase;"></div>
+    <div class="grid2">
+      <div class="field"><label>Discount %</label><input type="number" id="cpPercent"></div>
+      <div class="field"><label>OR Flat $</label><input type="number" id="cpFlat"></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Max Uses</label><input type="number" id="cpMaxUses"></div>
+      <div class="field"><label>Expires</label><input type="datetime-local" id="cpExpires"></div>
+    </div>
+    <button class="btn btn-dark" id="saveCouponBtn" style="width:100%;justify-content:center;">Create Coupon</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+
+</div>
+
+<script>
+/* ===== Client/Admin App Logic (Supabase) ===== */
+
+const SUPABASE_URL = "https://bhbmutalktgxexznccxb.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoYm11dGFsa3RneGV4em5jY3hiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzOTAyMDgsImV4cCI6MjA5ODk2NjIwOH0.ViAJLj-eM6zilFre9lnAHNxjA-VaffPgR3u9gxT6wVs";
+const PAYPAL_CLIENT_ID = "YOUR_PAYPAL_CLIENT_ID";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const STATUS_STEPS = ["Order Received","Brief Reviewed","Design Started","First Draft Ready","Revision","Final Delivery","Completed"];
+const STATUS_PCT = {"Order Received":10,"Brief Reviewed":25,"Design Started":40,"First Draft Ready":60,"Revision":75,"Final Delivery":90,"Completed":100};
+
+let currentUser=null, currentProfile=null, currentOrderId=null, chatChannel=null, countdownTimer=null, adminFilter='all', currentService=null, paypalSdkLoaded=false;
+
+function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+function fmtDate(d){ return d? new Date(d).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'}):'—'; }
+function esc(s){ return (s||'').toString().replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function genOrderNumber(){ return 'SD-'+Date.now().toString().slice(-8); }
+function genInvoiceNumber(){ return 'INV-'+Date.now().toString().slice(-8); }
+
+document.getElementById('googleBtn').addEventListener('click', async () => {
+  const { error } = await sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: window.location.href } });
+  if(error){ const m=document.getElementById('loginMsg'); m.textContent=error.message; m.classList.add('show'); }
+});
+document.getElementById('logoutBtn').addEventListener('click', async () => { await sb.auth.signOut(); window.location.reload(); });
+
+sb.auth.onAuthStateChange((event, session) => { if(session) initApp(session); });
+
+async function initApp(session){
+  currentUser = session.user;
+  let { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+  if(profile && !profile.photo_url && currentUser.user_metadata?.avatar_url){
+    await sb.from('profiles').update({ photo_url: currentUser.user_metadata.avatar_url, full_name: profile.full_name || currentUser.user_metadata.full_name }).eq('id', currentUser.id);
+    profile.photo_url = currentUser.user_metadata.avatar_url;
+  }
+  currentProfile = profile;
+  document.getElementById('loginView').style.display='none';
+  document.getElementById('appView').classList.add('show');
+  document.getElementById('avatarMini').src = profile?.photo_url || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(profile?.email||'U')}`;
+  if(profile && profile.dark_mode !== null && profile.dark_mode !== undefined){ setDarkMode(profile.dark_mode); }
+  buildSidebar();
+  loadNotifications();
+  loadAnnouncementBar();
+  subscribeGlobalRealtime();
+  if(currentProfile?.role === 'admin') showAdminView('dashboard'); else showClientView('services');
+}
+
+async function loadAnnouncementBar(){
+  const { data } = await sb.from('site_settings').select('*').in('key',['announcement_text','announcement_active']);
+  const map = {}; (data||[]).forEach(r => map[r.key]=r.value);
+  const bar = document.getElementById('announcementBar');
+  if(map.announcement_active === 'true' && map.announcement_text){ bar.textContent = map.announcement_text; bar.classList.add('show'); }
+}
+
+function buildSidebar(){
+  const nav = document.getElementById('navItems');
+  if(currentProfile?.role === 'admin'){
+    nav.innerHTML = `
+      <div class="nav-item" data-view="admin-dashboard">📊 <span>Dashboard</span></div>
+      <div class="nav-item" data-view="admin-orders">📦 <span>Orders</span></div>
+      <div class="nav-item" data-view="admin-clients">👥 <span>Clients</span></div>
+      <div class="nav-item" data-view="admin-services">🛠 <span>Services</span></div>
+      <div class="nav-item" data-view="admin-coupons">🏷 <span>Coupons</span></div>`;
+    nav.querySelectorAll('.nav-item').forEach(el => el.addEventListener('click', () => showAdminView(el.dataset.view.replace('admin-',''))));
+  } else {
+    nav.innerHTML = `
+      <div class="nav-item" data-view="services">🏠 <span>Dashboard</span></div>
+      <div class="nav-item" data-view="orders">📦 <span>Orders</span></div>
+      <div class="nav-item" data-view="profile">👤 <span>Profile</span></div>`;
+    nav.querySelectorAll('.nav-item').forEach(el => el.addEventListener('click', () => showClientView(el.dataset.view)));
+  }
+}
+function setActiveNav(view){
+  document.querySelectorAll('.nav-item[data-view]').forEach(n => n.classList.toggle('active', n.dataset.view === view || n.dataset.view === 'admin-'+view));
+}
+function showView(id){ document.querySelectorAll('.view').forEach(v=>v.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+
+function showClientView(view){
+  setActiveNav(view);
+  document.getElementById('topbarTitle').textContent = {services:'Dashboard',orders:'My Orders',invoices:'Invoices',favorites:'Favorites',referral:'Referral',profile:'My Profile'}[view] || 'Dashboard';
+  if(view==='services'){ showView('view-services'); loadServices(); }
+  else if(view==='orders'){ showView('view-orders'); loadClientOrders(); }
+  else if(view==='invoices'){ showView('view-invoices'); loadInvoices(); }
+  else if(view==='favorites'){ showView('view-favorites'); loadFavorites(); }
+  else if(view==='referral'){ showView('view-referral'); loadReferral(); }
+  else if(view==='profile'){ showView('view-profile'); loadProfile(); }
+}
+function showAdminView(view){
+  setActiveNav(view);
+  document.getElementById('topbarTitle').textContent = {dashboard:'Dashboard',orders:'All Orders',clients:'Clients',services:'Services',coupons:'Coupons'}[view] || 'Dashboard';
+  if(view==='dashboard'){ showView('view-admin-dashboard'); loadAdminDashboard(); }
+  else if(view==='orders'){ showView('view-admin-orders'); loadAdminOrders(); }
+  else if(view==='clients'){ showView('view-admin-clients'); loadClients(); }
+  else if(view==='services'){ showView('view-admin-services'); loadAdminServices(); }
+  else if(view==='coupons'){ showView('view-admin-coupons'); loadCoupons(); }
+}
+
+function setDarkMode(on){
+  document.documentElement.setAttribute('data-theme', on?'dark':'light');
+  document.getElementById('darkModeToggle').innerHTML = on? '☀️ <span>Light Mode</span>' : '🌙 <span>Dark Mode</span>';
+}
+document.getElementById('darkModeToggle').addEventListener('click', async () => {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  setDarkMode(!isDark);
+  if(currentUser) await sb.from('profiles').update({ dark_mode: !isDark }).eq('id', currentUser.id);
+});
+
+async function loadServices(){
+  const { data: services } = await sb.from('services').select('*').eq('active', true).order('sort_order');
+  const { data: favs } = await sb.from('favorites').select('service_id').eq('client_id', currentUser.id);
+  const favIds = new Set((favs||[]).map(f=>f.service_id));
+  document.getElementById('servicesGrid').innerHTML = (services||[]).map(s => serviceCardHtml(s, favIds.has(s.id))).join('');
+  wireServiceCards();
+}
+function serviceCardHtml(s, isFav){
+  return `<div class="service-card" data-id="${s.id}">
+    <button class="fav" data-fav="${s.id}" style="color:${isFav?'var(--gold-deep)':'var(--gray)'};">★</button>
+    <h3>${esc(s.name)}</h3>
+    <p style="font-size:.85rem;color:var(--gray);">${esc(s.description||'')}</p>
+    <div class="price">$${s.price}</div>
+    <ul>${(s.features||[]).map(f=>`<li>${esc(f)}</li>`).join('')}</ul>
+    <div style="font-size:.78rem;color:var(--gray);">Delivery: ${s.delivery_days} day(s)</div>
+    <button class="btn btn-gold btn-sm" data-order="${s.id}" style="margin-top:8px;">Order Now</button>
+  </div>`;
+}
+function wireServiceCards(){
+  document.querySelectorAll('[data-order]').forEach(b => b.addEventListener('click', () => openOrderRequest(b.dataset.order)));
+  document.querySelectorAll('[data-fav]').forEach(b => b.addEventListener('click', async () => {
+    const svcId = b.dataset.fav;
+    const { data: existing } = await sb.from('favorites').select('id').eq('client_id', currentUser.id).eq('service_id', svcId).maybeSingle();
+    if(existing){ await sb.from('favorites').delete().eq('id', existing.id); } else { await sb.from('favorites').insert({ client_id: currentUser.id, service_id: svcId }); }
+    loadServices();
+  }));
+}
+
+function computeExtrasTotal(){
+  let extra = 0;
+  if(document.getElementById('extraRush').checked) extra += parseFloat(document.getElementById('extraRush').dataset.price);
+  if(document.getElementById('extraRevision').checked) extra += parseFloat(document.getElementById('extraRevision').dataset.price);
+  return extra;
+}
+function updateOrderTotal(discount){
+  const base = currentService.price;
+  const extra = computeExtrasTotal();
+  const total = Math.max(0, base - (discount||0) + extra);
+  document.getElementById('orTotal').textContent = '$' + total.toFixed(2);
+}
+document.getElementById('extraRush').addEventListener('change', () => updateOrderTotal(0));
+document.getElementById('extraRevision').addEventListener('change', () => updateOrderTotal(0));
+
+async function openOrderRequest(serviceId){
+  const { data: s } = await sb.from('services').select('*').eq('id', serviceId).single();
+  currentService = s;
+  document.getElementById('orModalTitle').textContent = 'Order: ' + s.name;
+  document.getElementById('orTotal').textContent = '$' + s.price;
+  ['orChannel','orVideoTitle','orStyle','orDeadline','orRefLinks','orDescription','orCoupon'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('orRefImage').value='';
+  document.getElementById('extraRush').checked=false; document.getElementById('extraRevision').checked=false;
+  document.getElementById('orderRequestModal').classList.add('show');
+}
+document.getElementById('orCoupon').addEventListener('blur', async () => {
+  const code = document.getElementById('orCoupon').value.trim();
+  if(!code || !currentService) return;
+  const { data } = await sb.rpc('validate_coupon', { p_code: code, p_amount: currentService.price });
+  const row = data && data[0];
+  if(row && row.valid){ updateOrderTotal(row.discount); toast('Coupon applied!'); }
+  else { updateOrderTotal(0); toast(row?.message || 'Invalid coupon'); }
+});
+document.getElementById('orSubmitBtn').addEventListener('click', async () => {
+  const msgEl = document.getElementById('orMsg'); msgEl.classList.remove('show');
+  const channel = document.getElementById('orChannel').value.trim();
+  const description = document.getElementById('orDescription').value.trim();
+  if(!channel || !description){ msgEl.textContent='Channel and description are required.'; msgEl.classList.add('show'); return; }
+  let discount = 0; const couponCode = document.getElementById('orCoupon').value.trim();
+  if(couponCode){
+    const { data } = await sb.rpc('validate_coupon', { p_code: couponCode, p_amount: currentService.price });
+    if(data && data[0] && data[0].valid) discount = data[0].discount;
+  }
+  let refImageUrl = null;
+  const file = document.getElementById('orRefImage').files[0];
+  if(file){
+    const path = `references/${currentUser.id}/${Date.now()}_${file.name}`;
+    const { error: upErr } = await sb.storage.from('order-files').upload(path, file);
+    if(!upErr){ const { data: pub } = sb.storage.from('order-files').getPublicUrl(path); refImageUrl = pub.publicUrl; }
+  }
+  const extrasTotal = computeExtrasTotal();
+  const price = Math.max(0, currentService.price - discount + extrasTotal);
+  const { data: order, error } = await sb.from('orders').insert({
+    order_number: genOrderNumber(), client_id: currentUser.id, service_id: currentService.id,
+    project_name: currentService.name + ' — ' + channel, youtube_channel: channel,
+    video_title: document.getElementById('orVideoTitle').value.trim(),
+    thumbnail_style: document.getElementById('orStyle').value.trim(),
+    delivery_date: document.getElementById('orDeadline').value || null,
+    reference_links: document.getElementById('orRefLinks').value.trim(),
+    brief: description, coupon_code: couponCode || null, discount_amount: discount,
+    price, status:'Order Received', progress_percent:10, payment_status:'Payment Pending'
+  }).select().single();
+  if(error){ msgEl.textContent = error.message; msgEl.classList.add('show'); return; }
+  if(refImageUrl){ await sb.from('order_files').insert({ order_id: order.id, file_url: refImageUrl, file_name:'reference.jpg', is_final:false, uploaded_by: currentUser.id }); }
+  const extraRows = [];
+  if(document.getElementById('extraRush').checked) extraRows.push({ order_id: order.id, name:'Rush Delivery (24h)', price: parseFloat(document.getElementById('extraRush').dataset.price) });
+  if(document.getElementById('extraRevision').checked) extraRows.push({ order_id: order.id, name:'Extra Revision', price: parseFloat(document.getElementById('extraRevision').dataset.price) });
+  if(extraRows.length) await sb.from('order_extras').insert(extraRows);
+  document.getElementById('orderRequestModal').classList.remove('show');
+  toast('Order request submitted! Track it under My Orders.');
+  showClientView('orders');
+});
+
+async function loadClientOrders(){
+  const { data: orders } = await sb.from('orders').select('*').eq('client_id', currentUser.id).order('created_at',{ascending:false});
+  const list = document.getElementById('clientOrdersList');
+  if(!orders || orders.length===0){ list.innerHTML = `<div class="empty">📦 No orders yet — browse services to place your first order.</div>`; return; }
+  list.innerHTML = orders.map(o => {
+    const payClass = o.payment_status==='Paid'?'badge-pay-paid':(o.payment_status==='Refunded'?'badge-pay-refunded':'badge-pay-pending');
+    const pct = o.progress_percent ?? STATUS_PCT[o.status] ?? 10;
+    return `<div class="card" style="cursor:pointer;" data-id="${o.id}">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div><b>${esc(o.project_name)}</b><div style="font-size:.75rem;color:var(--gray);font-family:'JetBrains Mono',monospace;">${esc(o.order_number)}</div></div>
+        <div style="display:flex;gap:6px;"><span class="badge badge-status">${esc(o.status)}</span><span class="badge ${payClass}">${esc(o.payment_status)}</span></div>
+      </div>
+      <div class="progress-bar-wrap" style="margin-top:12px;"><div class="progress-bar-fill" style="width:${pct}%;"></div></div>
+    </div>`;
+  }).join('');
+  list.querySelectorAll('[data-id]').forEach(el => el.addEventListener('click', () => openClientOrder(el.dataset.id)));
+}
+
+async function openClientOrder(orderId){
+  currentOrderId = orderId;
+  const { data:o } = await sb.from('orders').select('*').eq('id', orderId).single();
+  showView('view-order-detail');
+  document.getElementById('dInfoBox').innerHTML = `<b>Order:</b> ${esc(o.order_number)}<br><b>Ordered:</b> ${fmtDate(o.order_date)}<br><b>Price:</b> $${o.price||0}<br><b>Brief:</b> ${esc(o.brief||'—')}`;
+  renderClientProgress(o); startCountdown(o.delivery_date);
+  loadClientFiles(orderId); loadClientRevisions(orderId); loadClientChat(orderId); subscribeOrderRealtime(orderId, 'client');
+  setupPayment(o);
+  setupReview(o);
+  setupDispute(orderId);
+}
+
+let selectedStars = 0;
+function setupReview(o){
+  const card = document.getElementById('reviewCard');
+  if(o.status !== 'Completed'){ card.style.display='none'; return; }
+  card.style.display='block';
+  sb.from('reviews').select('*').eq('order_id', o.id).maybeSingle().then(({data:review}) => {
+    if(review){
+      document.getElementById('reviewForm').style.display='none';
+      const ex = document.getElementById('reviewExisting');
+      ex.style.display='block';
+      ex.innerHTML = `<div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div><p style="font-size:.85rem;margin-top:6px;">${esc(review.review_text||'')}</p>${review.seller_reply?`<div style="margin-top:8px;padding:8px;background:var(--bg);border-radius:8px;font-size:.8rem;"><b>Satish replied:</b> ${esc(review.seller_reply)}</div>`:''}`;
+    } else {
+      document.getElementById('reviewForm').style.display='block';
+      document.getElementById('reviewExisting').style.display='none';
+      selectedStars = 0; renderStarPicker();
+    }
+  });
+}
+function renderStarPicker(){ document.getElementById('starPicker').textContent = '★'.repeat(selectedStars)+'☆'.repeat(5-selectedStars); }
+document.getElementById('starPicker').addEventListener('click', (e) => {
+  const rect = e.target.getBoundingClientRect();
+  const clickX = e.clientX - rect.left;
+  selectedStars = Math.max(1, Math.min(5, Math.ceil((clickX/rect.width)*5)));
+  renderStarPicker();
+});
+document.getElementById('submitReviewBtn').addEventListener('click', async () => {
+  if(selectedStars===0){ toast('Please select a star rating'); return; }
+  const review_text = document.getElementById('reviewText').value.trim();
+  const { error } = await sb.from('reviews').insert({ order_id: currentOrderId, client_id: currentUser.id, rating: selectedStars, review_text });
+  if(error){ toast('Error: '+error.message); return; }
+  toast('Thank you for your review!');
+  const { data:o } = await sb.from('orders').select('*').eq('id', currentOrderId).single();
+  setupReview(o);
+});
+
+function setupDispute(orderId){
+  sb.from('disputes').select('*').eq('order_id', orderId).order('created_at',{ascending:false}).then(({data}) => {
+    const el = document.getElementById('disputeStatus');
+    el.innerHTML = (data&&data.length) ? data.map(d=>`<div class="rev-item"><b>${d.status}</b> — ${esc(d.reason)}${d.admin_response?`<div style="margin-top:4px;font-size:.8rem;"><b>Response:</b> ${esc(d.admin_response)}</div>`:''}</div>`).join('') : '';
+  });
+}
+document.getElementById('openDisputeBtn').addEventListener('click', () => { document.getElementById('disputeReason').value=''; document.getElementById('disputeModal').classList.add('show'); });
+document.getElementById('submitDisputeBtn').addEventListener('click', async () => {
+  const reason = document.getElementById('disputeReason').value.trim();
+  if(!reason) return;
+  const { error } = await sb.from('disputes').insert({ order_id: currentOrderId, client_id: currentUser.id, reason });
+  if(error){ toast('Error: '+error.message); return; }
+  document.getElementById('disputeModal').classList.remove('show');
+  toast('Submitted — admin will review shortly.');
+  setupDispute(currentOrderId);
+});
+document.getElementById('backToOrders').addEventListener('click', () => { showView('view-orders'); if(countdownTimer) clearInterval(countdownTimer); loadClientOrders(); });
+
+function renderClientProgress(o){
+  const pct = o.progress_percent ?? STATUS_PCT[o.status] ?? 10;
+  document.getElementById('dProgressFill').style.width = pct+'%';
+  document.getElementById('dProgressLabel').textContent = o.status;
+  document.getElementById('dProgressPct').textContent = pct+'%';
+  const idx = STATUS_STEPS.indexOf(o.status);
+  document.getElementById('dStatusFlow').innerHTML = STATUS_STEPS.map((s,i)=>{
+    const cls = i<idx?'done':(i===idx?'current':'');
+    return `<div class="status-step ${cls}"><div class="dot"></div><div class="label">${s}</div></div>`;
+  }).join('');
+}
+function startCountdown(deliveryDate){
+  if(countdownTimer) clearInterval(countdownTimer);
+  const el = document.getElementById('dCountdown');
+  if(!deliveryDate){ el.innerHTML = '<div style="color:var(--gray);font-size:.85rem;">No deadline set</div>'; return; }
+  function tick(){
+    const diff = new Date(deliveryDate) - new Date();
+    if(diff<=0){ el.innerHTML = `<div style="font-weight:700;color:var(--ok);">Delivery time reached ✅</div>`; clearInterval(countdownTimer); return; }
+    const d=Math.floor(diff/864e5), h=Math.floor(diff/36e5)%24, m=Math.floor(diff/6e4)%60, s=Math.floor(diff/1000)%60;
+    el.innerHTML = `<div><div class="num">${d}</div><div class="unit">Days</div></div><div><div class="num">${h}</div><div class="unit">Hrs</div></div><div><div class="num">${m}</div><div class="unit">Min</div></div><div><div class="num">${s}</div><div class="unit">Sec</div></div>`;
+  }
+  tick(); countdownTimer = setInterval(tick,1000);
+}
+async function loadClientFiles(orderId){
+  const { data: files } = await sb.from('order_files').select('*').eq('order_id', orderId).eq('is_final', true).order('uploaded_at',{ascending:false});
+  const box = document.getElementById('dFileBox');
+  box.innerHTML = (files&&files.length) ? files.map(f=>`<div style="margin-bottom:10px;"><img class="file-thumb" src="${f.file_url}"><div style="display:flex;gap:8px;"><a href="${f.file_url}" target="_blank" class="btn btn-outline btn-sm">Preview</a><a href="${f.file_url}" download class="btn btn-dark btn-sm">Download</a></div></div>`).join('') : `<div class="empty" style="padding:20px;">No final files yet.</div>`;
+}
+async function loadClientRevisions(orderId){
+  const { data: revs } = await sb.from('revisions').select('*').eq('order_id', orderId).order('requested_at',{ascending:false});
+  document.getElementById('dRevisions').innerHTML = (revs&&revs.length) ? revs.map(r=>`<div class="rev-item"><b>${r.status}</b> — ${esc(r.message)}<div style="font-size:.72rem;color:var(--gray);">${fmtDate(r.requested_at)}</div></div>`).join('') : `<p style="font-size:.85rem;color:var(--gray);">No revisions yet.</p>`;
+}
+document.getElementById('submitRevBtn').addEventListener('click', async () => {
+  const input = document.getElementById('revInput'); const message = input.value.trim(); if(!message) return;
+  const { error } = await sb.from('revisions').insert({ order_id: currentOrderId, client_id: currentUser.id, message });
+  if(!error){ input.value=''; toast('Revision requested!'); loadClientRevisions(currentOrderId); }
+});
+async function loadClientChat(orderId){
+  const { data: msgs } = await sb.from('messages').select('*').eq('order_id', orderId).order('created_at',{ascending:true});
+  renderChat(msgs||[]);
+}
+function renderChat(msgs){
+  const box = document.getElementById('chatBox');
+  box.innerHTML = msgs.map(m=>`<div class="chat-msg ${m.sender_id===currentUser.id?'me':'them'}">${esc(m.message)}</div>`).join('');
+  box.scrollTop = box.scrollHeight;
+}
+document.getElementById('sendChatBtn').addEventListener('click', async () => {
+  const input = document.getElementById('chatInput'); const message = input.value.trim(); if(!message) return;
+  input.value=''; await sb.from('messages').insert({ order_id: currentOrderId, sender_id: currentUser.id, sender_role:'client', message });
+});
+document.getElementById('chatInput').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('sendChatBtn').click(); });
+
+function loadPaypalSdk(cb){ if(paypalSdkLoaded){cb();return;} const s=document.createElement('script'); s.src=`https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD`; s.onload=()=>{paypalSdkLoaded=true;cb();}; document.head.appendChild(s); }
+function setupPayment(o){
+  const card = document.getElementById('payCard'); const container = document.getElementById('paypal-button-container');
+  if(o.payment_status!=='Payment Pending' || !o.price || o.price<=0 || PAYPAL_CLIENT_ID.startsWith('YOUR_')){ card.style.display='none'; return; }
+  card.style.display='block'; container.innerHTML='';
+  loadPaypalSdk(() => {
+    paypal.Buttons({ style:{color:'gold',shape:'pill',label:'pay'},
+      createOrder:(d,a)=>a.order.create({ purchase_units:[{ amount:{value:String(o.price)}, custom_id:o.id }] }),
+      onApprove: async (d,a) => {
+        await a.order.capture();
+        try {
+          const resp = await fetch(`${SUPABASE_URL}/functions/v1/confirm-payment`, { method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${SUPABASE_ANON_KEY}`}, body: JSON.stringify({ order_id:o.id, paypal_order_id:d.orderID }) });
+          const result = await resp.json();
+          if(result.success){ toast('✅ Payment confirmed automatically!'); openClientOrder(o.id); }
+          else toast('Payment captured — confirming shortly.');
+        } catch(e){ toast('Payment captured!'); }
+      }
+    }).render('#paypal-button-container');
+  });
+}
+
+async function loadInvoices(){
+  const { data } = await sb.from('invoices').select('*, orders(order_number, project_name)').order('issued_at',{ascending:false});
+  document.getElementById('invoicesTbody').innerHTML = (data||[]).map(i=>`<tr><td>${esc(i.invoice_number)}</td><td>${esc(i.orders?.project_name||'')}</td><td>$${i.total}</td><td>${fmtDate(i.issued_at)}</td></tr>`).join('') || `<tr><td colspan="4" style="text-align:center;padding:30px;">No invoices yet.</td></tr>`;
+}
+async function loadFavorites(){
+  const { data: favs } = await sb.from('favorites').select('service_id, services(*)').eq('client_id', currentUser.id);
+  document.getElementById('favoritesGrid').innerHTML = (favs&&favs.length) ? favs.map(f=>serviceCardHtml(f.services,true)).join('') : `<div class="empty">No favorites yet.</div>`;
+  wireServiceCards();
+}
+async function loadReferral(){
+  document.getElementById('referralCodeBox').value = currentProfile?.referral_code || '';
+  const { data } = await sb.from('referrals').select('*').eq('referrer_id', currentUser.id).order('created_at',{ascending:false});
+  document.getElementById('referralsList').innerHTML = (data&&data.length) ? data.map(r=>`<div class="rev-item">${esc(r.referred_email)} — <b>${r.reward_status}</b></div>`).join('') : `<p style="font-size:.85rem;color:var(--gray);">No referrals yet — share your code!</p>`;
+}
+document.getElementById('copyReferralBtn').addEventListener('click', () => { navigator.clipboard?.writeText(document.getElementById('referralCodeBox').value); toast('Copied!'); });
+async function loadProfile(){
+  document.getElementById('profName').value = currentProfile?.full_name || '';
+  document.getElementById('profCompany').value = currentProfile?.company || '';
+  document.getElementById('profCountry').value = currentProfile?.country || '';
+}
+document.getElementById('saveProfileBtn').addEventListener('click', async () => {
+  const full_name = document.getElementById('profName').value.trim();
+  const company = document.getElementById('profCompany').value.trim();
+  const country = document.getElementById('profCountry').value.trim();
+  const { error } = await sb.from('profiles').update({ full_name, company, country }).eq('id', currentUser.id);
+  if(!error){ currentProfile.full_name=full_name; currentProfile.company=company; currentProfile.country=country; toast('Profile saved!'); }
+});
+
+async function loadAdminDashboard(){
+  const { data: orders } = await sb.from('orders').select('price, payment_status, created_at, service_id, services(name)');
+  const paid = (orders||[]).filter(o=>o.payment_status==='Paid');
+  const revenue = paid.reduce((s,o)=>s+(Number(o.price)||0),0);
+  const now = new Date(); const monthRevenue = paid.filter(o=> new Date(o.created_at).getMonth()===now.getMonth() && new Date(o.created_at).getFullYear()===now.getFullYear()).reduce((s,o)=>s+(Number(o.price)||0),0);
+  document.getElementById('statRevenue').textContent = '$'+revenue.toFixed(0);
+  document.getElementById('statOrders').textContent = (orders||[]).length;
+  document.getElementById('statMonth').textContent = '$'+monthRevenue.toFixed(0);
+  const { count: clientCount } = await sb.from('profiles').select('*', {count:'exact', head:true}).eq('role','client');
+  document.getElementById('statClients').textContent = clientCount || 0;
+  const counts = {};
+  (orders||[]).forEach(o => { const name = o.services?.name || 'Custom'; counts[name] = (counts[name]||0)+1; });
+  const best = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('bestService').textContent = best ? `${best[0]} — ${best[1]} orders` : 'No orders yet.';
+}
+
+async function loadAdminOrders(){
+  const { data: orders } = await sb.from('orders').select('*, profiles!orders_client_id_fkey(email)').order('created_at',{ascending:false});
+  renderAdminOrders(orders||[]);
+}
+function renderAdminOrders(orders){
+  const search = document.getElementById('adminSearch').value.toLowerCase();
+  let filtered = orders.filter(o => {
+    if(search && !(o.project_name.toLowerCase().includes(search) || o.order_number.toLowerCase().includes(search) || (o.profiles?.email||'').toLowerCase().includes(search))) return false;
+    if(adminFilter==='all') return true;
+    if(adminFilter==='Completed') return o.status==='Completed';
+    return o.payment_status===adminFilter;
+  });
+  document.getElementById('adminOrdersTbody').innerHTML = filtered.map(o => {
+    const payClass = o.payment_status==='Paid'?'badge-pay-paid':(o.payment_status==='Refunded'?'badge-pay-refunded':'badge-pay-pending');
+    return `<tr class="clickable" data-id="${o.id}">
+      <td><b>${esc(o.project_name)}</b><br><span style="font-size:.72rem;color:var(--gray);">${esc(o.order_number)}</span></td>
+      <td>${esc(o.profiles?.email||'—')}</td><td><span class="badge badge-status">${esc(o.status)}</span></td>
+      <td>${o.progress_percent??STATUS_PCT[o.status]??10}%</td><td><span class="badge ${payClass}">${esc(o.payment_status)}</span></td><td>${fmtDate(o.delivery_date)}</td></tr>`;
+  }).join('') || `<tr><td colspan="6" style="text-align:center;padding:30px;">No orders match.</td></tr>`;
+  document.querySelectorAll('#adminOrdersTbody tr[data-id]').forEach(r => r.addEventListener('click', () => openAdminOrder(r.dataset.id)));
+}
+document.getElementById('adminSearch').addEventListener('input', loadAdminOrders);
+document.getElementById('exportCsvBtn').addEventListener('click', async () => {
+  const { data: orders } = await sb.from('orders').select('*, profiles!orders_client_id_fkey(email)').order('created_at',{ascending:false});
+  const rows = [['Order Number','Project','Client Email','Status','Payment','Price','Order Date','Delivery Date']];
+  (orders||[]).forEach(o => rows.push([o.order_number, o.project_name, o.profiles?.email||'', o.status, o.payment_status, o.price||0, o.order_date, o.delivery_date||'']));
+  const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'orders-export.csv'; a.click();
+  URL.revokeObjectURL(url);
+});
+document.querySelectorAll('.filter-chip').forEach(c => c.addEventListener('click', () => { document.querySelectorAll('.filter-chip').forEach(x=>x.classList.remove('active')); c.classList.add('active'); adminFilter=c.dataset.filter; loadAdminOrders(); }));
+
+async function openAdminOrder(orderId){
+  currentOrderId = orderId;
+  const { data:o } = await sb.from('orders').select('*, profiles!orders_client_id_fkey(email)').eq('id', orderId).single();
+  showView('view-admin-order-detail');
+  document.getElementById('aoTitle').textContent = o.project_name;
+  document.getElementById('aoMeta').textContent = `${o.order_number} · ${o.profiles?.email||''} · ${fmtDate(o.order_date)}`;
+  document.getElementById('aoStatus').value = o.status; document.getElementById('aoPayment').value = o.payment_status;
+  loadAdminFiles(orderId); loadAdminRevisions(orderId); loadAdminChat(orderId); loadAdminNotes(orderId); loadAdminReview(orderId); loadAdminDisputes(orderId); subscribeOrderRealtime(orderId,'admin');
+}
+async function loadAdminReview(orderId){
+  const { data: review } = await sb.from('reviews').select('*').eq('order_id', orderId).maybeSingle();
+  const el = document.getElementById('aoReview');
+  if(!review){ el.innerHTML = '<p style="font-size:.82rem;color:var(--gray);">No review yet.</p>'; return; }
+  el.innerHTML = `<div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div><p style="font-size:.85rem;margin:6px 0;">${esc(review.review_text||'')}</p>
+    ${review.seller_reply? `<div style="font-size:.8rem;color:var(--gray);"><b>Your reply:</b> ${esc(review.seller_reply)}</div>` : `<textarea id="reviewReplyInput" placeholder="Reply to this review…" style="margin-top:6px;"></textarea><button class="btn btn-outline btn-sm" id="submitReviewReply" style="margin-top:6px;" data-review-id="${review.id}">Reply</button>`}`;
+  const btn = document.getElementById('submitReviewReply');
+  if(btn) btn.addEventListener('click', async () => {
+    const seller_reply = document.getElementById('reviewReplyInput').value.trim();
+    if(!seller_reply) return;
+    await sb.from('reviews').update({ seller_reply }).eq('id', btn.dataset.reviewId);
+    toast('Reply posted!'); loadAdminReview(orderId);
+  });
+}
+async function loadAdminDisputes(orderId){
+  const { data } = await sb.from('disputes').select('*').eq('order_id', orderId).order('created_at',{ascending:false});
+  const el = document.getElementById('aoDisputes');
+  el.innerHTML = (data&&data.length) ? data.map(d=>`<div class="rev-item"><b>${d.status}</b> — ${esc(d.reason)}
+    <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+      <select data-dispute-status="${d.id}" style="width:auto;padding:4px 8px;font-size:.75rem;"><option ${d.status==='Open'?'selected':''}>Open</option><option ${d.status==='Reviewing'?'selected':''}>Reviewing</option><option ${d.status==='Refunded'?'selected':''}>Refunded</option><option ${d.status==='Rejected'?'selected':''}>Rejected</option><option ${d.status==='Closed'?'selected':''}>Closed</option></select>
+    </div></div>`).join('') : '<p style="font-size:.82rem;color:var(--gray);">No disputes.</p>';
+  document.querySelectorAll('[data-dispute-status]').forEach(sel => sel.addEventListener('change', async () => {
+    await sb.from('disputes').update({ status: sel.value }).eq('id', sel.dataset.disputeStatus);
+    toast('Dispute status updated'); loadAdminDisputes(orderId);
+  }));
+}
+document.getElementById('backToAdminOrders').addEventListener('click', () => { showView('view-admin-orders'); loadAdminOrders(); });
+document.getElementById('aoUpdateStatus').addEventListener('click', async () => {
+  const status = document.getElementById('aoStatus').value;
+  await sb.from('orders').update({ status, progress_percent: STATUS_PCT[status] }).eq('id', currentOrderId);
+  toast('Status updated → '+status);
+});
+document.getElementById('aoUpdatePayment').addEventListener('click', async () => {
+  const payment_status = document.getElementById('aoPayment').value;
+  await sb.from('orders').update({ payment_status }).eq('id', currentOrderId);
+  toast('Payment updated → '+payment_status);
+});
+document.getElementById('aoGenerateInvoice').addEventListener('click', async () => {
+  const { data:o } = await sb.from('orders').select('*').eq('id', currentOrderId).single();
+  const { error } = await sb.from('invoices').insert({ order_id: currentOrderId, invoice_number: genInvoiceNumber(), amount: o.price, discount: o.discount_amount||0, total: o.price });
+  if(!error) toast('Invoice generated!'); else toast('Error: '+error.message);
+});
+async function loadAdminFiles(orderId){
+  const { data: files } = await sb.from('order_files').select('*').eq('order_id', orderId).order('uploaded_at',{ascending:false});
+  document.getElementById('aoFiles').innerHTML = (files||[]).map(f=>`<div><img class="file-thumb" src="${f.file_url}"><div style="font-size:.75rem;color:var(--gray);">${esc(f.file_name)} ${f.is_final?'(final)':'(reference)'}</div></div>`).join('') || '<p style="font-size:.8rem;color:var(--gray);">No files.</p>';
+}
+document.getElementById('aoUploadBtn').addEventListener('click', async () => {
+  const fileInput = document.getElementById('aoFileInput'); const file = fileInput.files[0]; if(!file){ toast('Choose a file'); return; }
+  const path = `${currentOrderId}/${Date.now()}_${file.name}`;
+  const { error: upErr } = await sb.storage.from('order-files').upload(path, file, {upsert:true});
+  if(upErr){ toast('Error: '+upErr.message); return; }
+  const { data: pub } = sb.storage.from('order-files').getPublicUrl(path);
+  await sb.from('order_files').insert({ order_id: currentOrderId, file_url: pub.publicUrl, file_name: file.name, uploaded_by: currentUser.id, is_final:true });
+  fileInput.value=''; toast('Uploaded!'); loadAdminFiles(currentOrderId);
+});
+async function loadAdminRevisions(orderId){
+  const { data: revs } = await sb.from('revisions').select('*').eq('order_id', orderId).order('requested_at',{ascending:false});
+  document.getElementById('aoRevisions').innerHTML = (revs||[]).map(r=>`<div class="rev-item"><b>${r.status}</b> — ${esc(r.message)}
+    ${r.status!=='Completed'?`<div style="margin-top:6px;"><button class="btn btn-outline btn-sm" data-rv-approve="${r.id}">Approve</button> <button class="btn btn-dark btn-sm" data-rv-complete="${r.id}">Complete</button></div>`:''}</div>`).join('') || '<p style="font-size:.8rem;color:var(--gray);">None yet.</p>';
+  document.querySelectorAll('[data-rv-approve]').forEach(b=>b.addEventListener('click', async ()=>{ await sb.from('revisions').update({status:'Approved'}).eq('id', b.dataset.rvApprove); loadAdminRevisions(orderId); }));
+  document.querySelectorAll('[data-rv-complete]').forEach(b=>b.addEventListener('click', async ()=>{ await sb.from('revisions').update({status:'Completed'}).eq('id', b.dataset.rvComplete); loadAdminRevisions(orderId); }));
+}
+async function loadAdminChat(orderId){ const { data: msgs } = await sb.from('messages').select('*').eq('order_id', orderId).order('created_at',{ascending:true}); renderAdminChat(msgs||[]); }
+function renderAdminChat(msgs){ const box=document.getElementById('aoChat'); box.innerHTML = msgs.map(m=>`<div class="chat-msg ${m.sender_role==='admin'?'me':'them'}">${esc(m.message)}</div>`).join(''); box.scrollTop=box.scrollHeight; }
+document.getElementById('aoSendChat').addEventListener('click', async () => { const input=document.getElementById('aoChatInput'); const message=input.value.trim(); if(!message)return; input.value=''; await sb.from('messages').insert({order_id:currentOrderId, sender_id:currentUser.id, sender_role:'admin', message}); });
+async function loadAdminNotes(orderId){ const { data } = await sb.from('admin_notes').select('*').eq('order_id',orderId).order('created_at',{ascending:false}); document.getElementById('aoNotes').innerHTML = (data||[]).map(n=>`<div style="font-size:.82rem;padding:6px 0;border-bottom:1px solid var(--card-line);">${esc(n.note)}<div style="font-size:.7rem;color:var(--gray);">${fmtDate(n.created_at)}</div></div>`).join('') || '<p style="font-size:.8rem;color:var(--gray);">No notes.</p>'; }
+document.getElementById('aoAddNote').addEventListener('click', async () => { const input=document.getElementById('aoNoteInput'); const note=input.value.trim(); if(!note)return; await sb.from('admin_notes').insert({order_id:currentOrderId, note}); input.value=''; loadAdminNotes(currentOrderId); });
+
+document.getElementById('newOrderBtn').addEventListener('click', () => document.getElementById('newOrderModal').classList.add('show'));
+document.getElementById('createOrderBtn').addEventListener('click', async () => {
+  const email = document.getElementById('noClientEmail').value.trim();
+  const project_name = document.getElementById('noProjectName').value.trim();
+  const delivery_date = document.getElementById('noDeliveryDate').value;
+  const price = parseFloat(document.getElementById('noPrice').value)||0;
+  const brief = document.getElementById('noBrief').value.trim();
+  const msgEl = document.getElementById('newOrderMsg');
+  if(!email || !project_name){ msgEl.textContent='Email and project name required.'; msgEl.classList.add('show'); return; }
+  const { data: cp } = await sb.from('profiles').select('id').eq('email', email).maybeSingle();
+  if(!cp){ msgEl.textContent='No registered client with that email yet.'; msgEl.classList.add('show'); return; }
+  const { error } = await sb.from('orders').insert({ order_number: genOrderNumber(), client_id: cp.id, project_name, delivery_date: delivery_date||null, price, brief, status:'Order Received', progress_percent:10, payment_status:'Payment Pending' });
+  if(error){ msgEl.textContent=error.message; msgEl.classList.add('show'); return; }
+  document.getElementById('newOrderModal').classList.remove('show'); msgEl.classList.remove('show'); toast('Order created!'); loadAdminOrders();
+});
+
+async function loadClients(){
+  const { data: clients } = await sb.from('profiles').select('*').eq('role','client');
+  const { data: orders } = await sb.from('orders').select('client_id');
+  const counts = {}; (orders||[]).forEach(o => counts[o.client_id] = (counts[o.client_id]||0)+1);
+  document.getElementById('clientsTbody').innerHTML = (clients||[]).map(c=>`<tr><td>${esc(c.full_name||'—')}</td><td>${esc(c.email)}</td><td>${counts[c.id]||0}</td></tr>`).join('') || `<tr><td colspan="3" style="text-align:center;padding:30px;">No clients yet.</td></tr>`;
+}
+
+async function loadAdminServices(){
+  const { data: services } = await sb.from('services').select('*').order('sort_order');
+  document.getElementById('adminServicesGrid').innerHTML = (services||[]).map(s=>`
+    <div class="service-card">
+      <h3>${esc(s.name)}</h3><p style="font-size:.85rem;color:var(--gray);">${esc(s.description||'')}</p>
+      <div class="price">$${s.price}</div>
+      <ul>${(s.features||[]).map(f=>`<li>${esc(f)}</li>`).join('')}</ul>
+      <button class="btn btn-outline btn-sm" data-edit-svc="${s.id}">Edit</button>
+    </div>`).join('');
+  document.querySelectorAll('[data-edit-svc]').forEach(b => b.addEventListener('click', () => editService(b.dataset.editSvc)));
+}
+document.getElementById('newServiceBtn').addEventListener('click', () => { ['svcId','svcName','svcDescription','svcPrice','svcDelivery','svcFeatures'].forEach(id=>document.getElementById(id).value=''); document.getElementById('serviceModal').classList.add('show'); });
+async function editService(id){
+  const { data: s } = await sb.from('services').select('*').eq('id', id).single();
+  document.getElementById('svcId').value = s.id; document.getElementById('svcName').value = s.name;
+  document.getElementById('svcDescription').value = s.description||''; document.getElementById('svcPrice').value = s.price;
+  document.getElementById('svcDelivery').value = s.delivery_days; document.getElementById('svcFeatures').value = (s.features||[]).join(', ');
+  document.getElementById('serviceModal').classList.add('show');
+}
+document.getElementById('saveServiceBtn').addEventListener('click', async () => {
+  const id = document.getElementById('svcId').value;
+  const payload = {
+    name: document.getElementById('svcName').value.trim(),
+    slug: document.getElementById('svcName').value.trim().toLowerCase().replace(/[^a-z0-9]+/g,'-'),
+    description: document.getElementById('svcDescription').value.trim(),
+    price: parseFloat(document.getElementById('svcPrice').value)||0,
+    delivery_days: parseInt(document.getElementById('svcDelivery').value)||2,
+    features: document.getElementById('svcFeatures').value.split(',').map(f=>f.trim()).filter(Boolean)
+  };
+  if(id){ await sb.from('services').update(payload).eq('id', id); } else { await sb.from('services').insert(payload); }
+  document.getElementById('serviceModal').classList.remove('show'); toast('Service saved!'); loadAdminServices();
+});
+
+async function loadCoupons(){
+  const { data } = await sb.from('coupons').select('*').order('created_at',{ascending:false});
+  document.getElementById('couponsTbody').innerHTML = (data||[]).map(c=>`<tr><td>${esc(c.code)}</td><td>${c.discount_percent?c.discount_percent+'%':'$'+c.discount_flat}</td><td>${c.used_count}${c.max_uses?'/'+c.max_uses:''}</td><td>${c.expires_at?fmtDate(c.expires_at):'—'}</td><td>${c.active?'✅':'❌'}</td></tr>`).join('') || `<tr><td colspan="5" style="text-align:center;padding:30px;">No coupons yet.</td></tr>`;
+}
+document.getElementById('newCouponBtn').addEventListener('click', () => document.getElementById('couponModal').classList.add('show'));
+document.getElementById('saveCouponBtn').addEventListener('click', async () => {
+  const payload = { code: document.getElementById('cpCode').value.trim().toUpperCase(),
+    discount_percent: parseFloat(document.getElementById('cpPercent').value)||null,
+    discount_flat: parseFloat(document.getElementById('cpFlat').value)||null,
+    max_uses: parseInt(document.getElementById('cpMaxUses').value)||null,
+    expires_at: document.getElementById('cpExpires').value||null };
+  const { error } = await sb.from('coupons').insert(payload);
+  if(error){ toast('Error: '+error.message); return; }
+  document.getElementById('couponModal').classList.remove('show'); toast('Coupon created!'); loadCoupons();
+});
+
+document.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', () => document.getElementById(el.dataset.close).classList.remove('show')));
+
+async function loadNotifications(){
+  const { data } = await sb.from('notifications').select('*').eq('user_id', currentUser.id).order('created_at',{ascending:false}).limit(30);
+  const unread = (data||[]).filter(n=>!n.is_read).length;
+  const dot = document.getElementById('notifDot');
+  if(unread>0){ dot.style.display='flex'; dot.textContent=unread; } else dot.style.display='none';
+  document.getElementById('notifList').innerHTML = (data&&data.length)? data.map(n=>`<div class="notif-item ${n.is_read?'':'unread'}">${esc(n.message)}<span class="time">${fmtDate(n.created_at)}</span></div>`).join('') : '<div class="notif-item">No notifications.</div>';
+}
+document.getElementById('bellBtn').addEventListener('click', async () => {
+  document.getElementById('notifPanel').classList.toggle('show');
+  await sb.from('notifications').update({is_read:true}).eq('user_id', currentUser.id).eq('is_read', false);
+  setTimeout(loadNotifications, 500);
+});
+document.addEventListener('click', (e) => { const p=document.getElementById('notifPanel'), b=document.getElementById('bellBtn'); if(p.classList.contains('show') && !p.contains(e.target) && !b.contains(e.target)) p.classList.remove('show'); });
+
+function subscribeGlobalRealtime(){
+  sb.channel('notifs-'+currentUser.id).on('postgres_changes', {event:'*',schema:'public',table:'notifications',filter:`user_id=eq.${currentUser.id}`}, loadNotifications).subscribe();
+  if(currentProfile?.role==='admin'){
+    sb.channel('admin-orders-live').on('postgres_changes',{event:'*',schema:'public',table:'orders'}, () => { if(document.getElementById('view-admin-orders').classList.contains('active')) loadAdminOrders(); if(document.getElementById('view-admin-dashboard').classList.contains('active')) loadAdminDashboard(); }).subscribe();
+  } else {
+    sb.channel('client-orders-live').on('postgres_changes',{event:'*',schema:'public',table:'orders',filter:`client_id=eq.${currentUser.id}`}, () => { if(document.getElementById('view-orders').classList.contains('active')) loadClientOrders(); }).subscribe();
+  }
+}
+function subscribeOrderRealtime(orderId, role){
+  if(chatChannel) sb.removeChannel(chatChannel);
+  chatChannel = sb.channel('order-'+orderId+'-'+role)
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:`order_id=eq.${orderId}`}, () => role==='admin'?loadAdminChat(orderId):loadClientChat(orderId))
+    .on('postgres_changes',{event:'*',schema:'public',table:'orders',filter:`id=eq.${orderId}`}, payload => { if(role==='client'){ renderClientProgress(payload.new); startCountdown(payload.new.delivery_date); } })
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'order_files',filter:`order_id=eq.${orderId}`}, () => role==='admin'?loadAdminFiles(orderId):loadClientFiles(orderId))
+    .on('postgres_changes',{event:'*',schema:'public',table:'revisions',filter:`order_id=eq.${orderId}`}, () => role==='admin'?loadAdminRevisions(orderId):loadClientRevisions(orderId))
+    .subscribe();
+}
+
+let pendingServiceSlug = sessionStorage.getItem('pendingServiceSlug') || null;
+
+function openAppOverlay(serviceSlug){
+  if(serviceSlug) sessionStorage.setItem('pendingServiceSlug', serviceSlug);
+  document.getElementById('appOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  sb.auth.getSession().then(({data:{session}}) => {
+    if(session){ initApp(session); }
+    else { document.getElementById('loginView').style.display='flex'; document.getElementById('appView').classList.remove('show'); }
+  });
+}
+function closeAppOverlay(){
+  document.getElementById('appOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+  sessionStorage.removeItem('pendingServiceSlug');
+}
+document.getElementById('closeAppOverlayBtn')?.addEventListener('click', closeAppOverlay);
+
+// Wire the real pricing cards on the homepage to open the overlay + order flow directly
+document.querySelectorAll('[data-start-order]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    openAppOverlay(btn.dataset.startOrder);
+  });
+});
+// Wire any "open dashboard / login" entry points (nav button, floating button) with no preselected service
+document.querySelectorAll('[data-open-dashboard]').forEach(btn => {
+  btn.addEventListener('click', (e) => { e.preventDefault(); openAppOverlay(null); });
+});
+
+// After a session appears (e.g. right after Google login redirect), auto-resume a pending order if one was queued
+const _origInitApp = initApp;
+initApp = async function(session){
+  await _origInitApp(session);
+  if(pendingServiceSlug && currentProfile?.role !== 'admin'){
+    const slug = pendingServiceSlug;
+    pendingServiceSlug = null;
+    sessionStorage.removeItem('pendingServiceSlug');
+    const { data: svc } = await sb.from('services').select('*').eq('slug', slug).maybeSingle();
+    if(svc){ showClientView('services'); setTimeout(() => openOrderRequest(svc.id), 300); }
+  }
+};
+
+// Auto light/dark based on the visitor's device setting, unless they already picked one
+function applySystemThemeDefault(){
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  setDarkMode(prefersDark);
+}
+applySystemThemeDefault();
+
+// Passive check on page load: if already logged in from before, we DON'T auto-open the overlay
+// (homepage stays visible) — the overlay only opens when the visitor clicks an order/dashboard button.
+
 </script>
 </body>
 </html>
